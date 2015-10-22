@@ -7,4 +7,4 @@
 `y = [y1, y2, ...]` is the label.
 
 
-![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
+![Image of Yaktocat](images/combine.png)
