@@ -11,8 +11,4 @@ This package demonstrates how to build a transfer learning network effortlessly 
 
 ![transfer learning](images/illustration.png)
 
-Standard `transfer learning` also known as `multi-task learning` or `multi-modal learning` consist of multiple different feature spaces, for example, a text feature space and an image feature space. And there are usually two kinds of network, one has a `split` representation (Figure a), another has a `shared` representation (Figure b). They have the following main differences
-
-| Shared | Split |
-|--------|-------|å
-| abc |  efg  |
+Standard `transfer learning` also known as `multi-task learning` or `multi-modal learning` consist of multiple different feature spaces, for example, a text feature space and an image feature space, merging together into a shared representation. For example in Figure (b), we try map both the image and text to a common shared feature space.
