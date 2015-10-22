@@ -10,4 +10,4 @@
 This package demonstrates how to build a transfer learning network effortlessly with [Mozi](https://github.com/hycis/Mozi).
 
 
-![](images/illustration.png =120x100)
+![transfer learning](images/illustration.png)
