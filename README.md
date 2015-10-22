@@ -9,5 +9,6 @@
 # Transfer Learning
 This package demonstrates how to build a transfer learning network effortlessly with [Mozi](https://github.com/hycis/Mozi).
 
-
 ![transfer learning](images/illustration.png)
+
+Standard `transfer learning` also known as `multi-task learning` or `multi-modal learning` consist of multiple different feature spaces, for example, a text feature space and an image feature space.  
