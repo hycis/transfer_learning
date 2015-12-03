@@ -10,9 +10,8 @@
 This package demonstrates how to build a transfer learning network effortlessly with [Theano](https://github.com/Theano/Theano.git) and [Mozi](https://github.com/hycis/Mozi).
 
 <!-- ![transfer learning](images/illustration.png "Title" {width=40px height=400px}) -->
-<img src="images/type1a.png" width="200">
-<img src="images/type1b.png" width="200">
-<img src="images/type2.png" width="200">
+<img src="images/type1.png" height="200">
+<img src="images/type2.png" height="200">
 
 
 Standard `transfer learning` also known as `multi-task learning` or `multi-modal learning` typically has multiple inputs and multiple outputs. And generally there are two types, `Type 1` (Fig 1) has a common shared representation layer where the objective is to map different modalities into a common representation space, while `Type 2` (Fig 2) tries to keep individual modality representation space separate, and finally concatenate them to pass through subsequent layers for fine-tuning.
