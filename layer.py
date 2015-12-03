@@ -36,7 +36,6 @@ class Merge(Template):
 
 class Concate(Template):
 
-
     def __init__(self, input_dim, output_dim):
         self.layers = []
         self.layers.append(RELU())
@@ -97,7 +96,6 @@ class FlattenAll(Template):
         return state
 
     def _test_fprop(self, state_below):
-        # import pdb; pdb.set_trace()
         left, right = state_below
         left = self.flatten(left)
         right = self.flatten(right)
