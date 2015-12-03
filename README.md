@@ -6,13 +6,15 @@
 `X = [[t1, i1], [t2, i2], ...]` where t1 is the text feature corresponding to image i1 and
 `y = [y1, y2, ...]` is the label. -->
 
-# Transfer Learning
-This package demonstrates how to build a transfer learning network effortlessly with [Mozi](https://github.com/hycis/Mozi).
+# Transfer Learning with Theano
+This package demonstrates how to build a transfer learning network effortlessly with [Theano](https://github.com/Theano/Theano.git) and [Mozi](https://github.com/hycis/Mozi).
 
 <!-- ![transfer learning](images/illustration.png "Title" {width=40px height=400px}) -->
-<img src="images/illustration.png" width="300">
+<img src="images/type1a.png" width="600">
+<img src="images/type1a.png" width="600">
+<img src="images/type2.png" width="600">
 
 
-Standard `transfer learning` also known as `multi-task learning` or `multi-modal learning` consist of transforming multiple different feature spaces, for example, a text feature space and an image feature space, into a shared representation. For example in the figure above, we try to map both the image and text to a common shared feature space. One interesting feature of transfer learning is that once the model is trained, during testing, we can just use one of the input channels for classification, for example we can just use text or image as input for classification. Of course we can also switch on all the channels to improve the classification result. The code below illustrate how to build a transfer learning model.
+Standard `transfer learning` also known as `multi-task learning` or `multi-modal learning` typically has multiple inputs and multiple outputs. And generally there are two types, `Type 1` (Fig 1) has a common shared representation layer where the objective is to map different modalities into a common representation space, while `Type 2` (Fig 2) tries to keep individual modality representation space separate, and finally concatenate them to pass through subsequent layers for fine-tuning.
 
-First build a left layer
+The way is to train `Type1` and `Type2` is also different. For `Type 1`, you first train `1 -> 3` (Fig 1a) then `2 -> 3` (Fig 1b), while for `Type 2`, you concatenate the outputs from `step 1` and `step 2` (Fig 2) before proceed to `step 3` for the concatenated features, i.e  `1 + 2 -> 3`.

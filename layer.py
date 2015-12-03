@@ -1,20 +1,22 @@
 
 from mozi.layers.linear import Linear
 from mozi.layers.template import Template
-from mozi.layers.activation import RELU
-
+from mozi.layers.activation import RELU, Softmax
+import theano.tensor as T
 
 class Merge(Template):
 
     def __init__(self, input_dim, output_dim):
         self.layers = []
         self.layers.append(RELU())
-        self.layers.append(Linear(input_dim,4096))
+        self.layers.append(Linear(input_dim,200))
         self.layers.append(RELU())
-        self.layers.append(Linear(4096, output_dim))
+        self.layers.append(Linear(200, output_dim))
+        self.layers.append(Softmax())
         self.params = []
         for layer in self.layers:
-            self.params += layers.params
+            self.params += layer.params
+
 
     def _test_fprop(self, state_below):
         left, right = state_below
@@ -32,6 +34,36 @@ class Merge(Template):
         return left, right
 
 
+class Concate(Template):
+
+
+    def __init__(self, input_dim, output_dim):
+        self.layers = []
+        self.layers.append(RELU())
+        self.layers.append(Linear(input_dim,200))
+        self.layers.append(RELU())
+        self.layers.append(Linear(200, output_dim))
+        self.layers.append(Softmax())
+        self.params = []
+        for layer in self.layers:
+            self.params += layer.params
+
+    def _test_fprop(self, state_below):
+        left, right = state_below
+        concat = T.concatenate([left, right], axis=1)
+        for layer in self.layers:
+            concat = layer._test_fprop(concat)
+        return concat
+
+
+    def _train_fprop(self, state_below):
+        left, right = state_below
+        concat = T.concatenate([left, right], axis=1)
+        for layer in self.layers:
+            concat = layer._train_fprop(concat)
+        return concat
+
+
 class Parallel(Template):
 
     def __init__(self, left_model, right_model):
@@ -45,15 +77,31 @@ class Parallel(Template):
 
 
     def _test_fprop(self, state_below):
-        left = state_below[0]
+        left, right = state_below
         left, _ = self.left_model.test_fprop(left)
-        right = state_below[1]
         right, _ = self.right_model.test_fprop(right)
         return left, right
 
     def _train_fprop(self, state_below):
-        left = state_below[0]
+        left, right = state_below
         left, _ = self.left_model.train_fprop(left)
-        right = state_below[1]
         right, _ = self.right_model.train_fprop(right)
         return left, right
+
+
+class FlattenAll(Template):
+
+    def flatten(self, state):
+        if T.gt(state.ndim, 2):
+            state = state.reshape((state.shape[0], T.prod(state.shape[1:])))
+        return state
+
+    def _test_fprop(self, state_below):
+        # import pdb; pdb.set_trace()
+        left, right = state_below
+        left = self.flatten(left)
+        right = self.flatten(right)
+        return left, right
+
+    def _train_fprop(self, state_below):
+        return self._test_fprop(state_below)
