@@ -85,13 +85,17 @@ def train():
     _TEXT_OUTPUT_DIM_ = 100
     _IMG_OUTPUT_DIM_ = 80
 
-    left_model = _left_model(_TEXT_INPUT_DIM_, _TEXT_OUTPUT_DIM_)
-    right_model = _right_model(_IMG_INPUT_DIM_, _IMG_OUTPUT_DIM_)
-
+    # build dataset
     txt = np.random.rand(_NUM_EXP_, _TEXT_INPUT_DIM_)
     img = np.random.rand(_NUM_EXP_, *_IMG_INPUT_DIM_)
     y = np.random.rand(_NUM_EXP_, _OUTPUT_DIM_)
     data = MultiInputsData(datasets=(txt, img), labels=(y,))
+
+    # build left and right model
+    left_model = _left_model(_TEXT_INPUT_DIM_, _TEXT_OUTPUT_DIM_)
+    right_model = _right_model(_IMG_INPUT_DIM_, _IMG_OUTPUT_DIM_)
+
+    # build the master model
     model = Sequential(input_var=(T.matrix(), T.tensor4()), output_var=T.matrix())
     model.add(Parallel(left_model, right_model))
     model.add(FlattenAll())
