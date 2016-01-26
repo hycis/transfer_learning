@@ -101,7 +101,7 @@ def train():
     txt = np.random.rand(_NUM_EXP_, _TEXT_INPUT_DIM_)
     img = np.random.rand(_NUM_EXP_, *_IMG_INPUT_DIM_)
     y = np.random.rand(_NUM_EXP_, _OUTPUT_DIM_)
-    data = MultiInputsData(datasets=(txt, img), labels=(y,))
+    data = MultiInputsData(X=(txt, img), y=y, train_valid_test_ratio=[9,1,0])
 
     # build left and right model
     left_model = _left_model(_TEXT_INPUT_DIM_, _MERGED_DIM_)

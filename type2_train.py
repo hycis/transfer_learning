@@ -89,7 +89,7 @@ def train():
     txt = np.random.rand(_NUM_EXP_, _TEXT_INPUT_DIM_)
     img = np.random.rand(_NUM_EXP_, *_IMG_INPUT_DIM_)
     y = np.random.rand(_NUM_EXP_, _OUTPUT_DIM_)
-    data = MultiInputsData(datasets=(txt, img), labels=(y,))
+    data = MultiInputsData(X=(txt, img), y=y)
 
     # build left and right model
     left_model = _left_model(_TEXT_INPUT_DIM_, _TEXT_OUTPUT_DIM_)
